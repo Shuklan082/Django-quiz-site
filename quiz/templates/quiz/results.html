@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'quiz/results.css' %}">
+
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+    <div class="full_container">
+
+        <h1 class="results_title">Results</h1>
+        <p class="correct_to_total">{{ num_correct }}/{{ total_questions }}</p>
+
+        {% if accuracy_over_75 %}
+            <p class="accuracy_good">{{ accuracy_formatted }}</p>
+
+        {% else %}
+            <p class="accuracy_bad">{{ accuracy_formatted }}</p>
+        {% endif %}
+
+        <a class="home_button" href="{% url 'quiz:index' %}">Home</a>
+
+        <a class="home_button" href="{% url 'quiz:single_quiz' quiz.id %}">Try Again</a>
+
+    </div>
+
+</body>
+</html>

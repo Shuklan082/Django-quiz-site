@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'quiz/single_question.css' %}">
+
+    <meta charset="UTF-8">
+    <title>Single Question</title>
+
+</head>
+<body>
+
+    <div class="waveWrapper waveAnimation">
+      <div class="waveWrapperInner bgTop">
+        <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+      </div>
+      <div class="waveWrapperInner bgMiddle">
+        <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
+      </div>
+      <div class="waveWrapperInner bgBottom">
+        <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
+      </div>
+    </div>
+
+    <div class="full_container">
+
+        <h2 class="question_title">{{ current_question.question_text }}</h2>
+
+        {% if error_message %}
+            <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+
+        <form action="{% url 'quiz:vote' quiz.id current_question.question_num %}" method="post">
+        {% csrf_token %}
+
+            <div class="radio-toolbar">
+
+                {% for choice in current_question.choice_set.all %}
+
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                    <br>
+                    <br>
+
+                {% endfor %}
+
+            </div>
+
+        <input type="submit" class="submit_button" value={{ next_or_submit }}>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

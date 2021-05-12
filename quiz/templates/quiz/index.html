@@ -1,0 +1,79 @@
+{% load static %}
+<html lang="en">
+<head>
+
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'quiz/index.css' %}">
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'quiz/bootstrap4/bootstrap.min.css' %}">-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+
+<!--    <script type="text/javascript" href="{% static 'quiz/index.js' %}" ></script>-->
+
+    <meta charset="UTF-8">
+    <title>VIT QUIZ SITE</title>
+</head>
+<body>
+
+    <div class="area" >
+            <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+
+
+        <div class="top_container">
+            <h1 class="site_title">qVITzoo</h1>
+
+            <ul>
+                {% if user.is_authenticated %}
+                <li> HI {{user.first_name}}</li>
+                <li><a class="create_quiz" href="{% url 'accounts:logout' %}">Logout</a></li>
+                {% else %}
+                <li><a class="create_quiz" href="{% url 'accounts:register' %}">Register</a></li>
+                <li><a class="create_quiz" href="{% url 'accounts:login' %}">Login</a></li>
+                {% endif %}
+
+            </ul>
+
+            <marquee><p class="site_description">Take a quiz or create your own!</p></marquee>
+            <a class="create_quiz" href="{% url 'quiz:create_quiz' %}">CREATE QUIZ</a>
+        </div>
+
+
+        {% if all_quiz_list %}
+
+            <section class="card_container">
+
+                    {% for quiz in all_quiz_list %}
+                        <a class="card" href="{% url 'quiz:single_quiz' quiz.id %}">
+                            <h3 class="quiz_title">{{ quiz.quiz_title }}</h3>
+                            <h6 class="num_questions">{{ quiz.num_questions }} Questions</h6>
+                        </a>
+
+                    {% endfor %}
+            </section>
+
+
+
+        {% else %}
+            <p>No quizzes are available.</p>
+        {% endif %}
+
+        <br>
+        <br>
+        <br>
+
+    </div>
+
+
+</body>
+</html>
